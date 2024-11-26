@@ -1,6 +1,6 @@
 services:
   nextjs:
-    build: /Student-attendance-system-next-js-main
+    build: ./Student-attendance-system-next-js-main
     ports:
       - '3000:3000'
     depends_on:
@@ -10,7 +10,7 @@ services:
       - mynetwork
 
   nestjs:
-    build: /project-name
+    build: ./project-name
     ports:
       - '3001:3001'
     depends_on:
