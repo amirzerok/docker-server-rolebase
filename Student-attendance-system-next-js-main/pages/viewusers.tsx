@@ -46,7 +46,7 @@ const UsersTable: React.FC = () => {
     };
 
     const fetchRoles = async () => {
-      const response = await axios.get('http://localhost:3001/users/role'); // آدرس API نقش‌ها
+      const response = await axios.get('http://nestjs:3001/users/role'); // آدرس API نقش‌ها
       setRoles(response.data);
     };
 

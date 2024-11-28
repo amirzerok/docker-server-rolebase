@@ -35,7 +35,7 @@ const RoleCreationPage: React.FC = () => {
     };
     
     try {
-      const response = await axios.post('http://localhost:3001/users/role', newRole);
+      const response = await axios.post('http://nestjs:3001/users/role', newRole);
       console.log(response.data);
       setMessage('نقش با موفقیت ایجاد شد.');
       setSeverity('success');

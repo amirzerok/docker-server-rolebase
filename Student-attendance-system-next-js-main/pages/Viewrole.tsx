@@ -24,7 +24,7 @@ const RoleTable: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/users/role');
+        const response = await axios.get('http://nestjs:3001/users/role');
 
         // فیلتر کردن نقش‌ها و تبدیل مجوزها به شی (object)
         const filteredRoles = response.data.map((role: Role) => {
@@ -100,7 +100,7 @@ const RoleTable: React.FC = () => {
   const handleDeleteClick = async (id: number) => {
     if (window.confirm('آیا از حذف این نقش مطمئن هستید؟')) {
       try {
-        await axios.delete(`http://localhost:3001/users/role/${id}`);
+        await axios.delete(`http://nestjs:3001/users/role/${id}`);
         setRoles(roles.filter(role => role.id !== id));
       } catch (error) {
         console.error('Error deleting role:', error);
@@ -116,7 +116,7 @@ const RoleTable: React.FC = () => {
   const handleUpdateRole = async () => {
     if (dialogRole) {
       try {
-        await axios.patch(`http://localhost:3001/users/role/${dialogRole.id}`, {
+        await axios.patch(`http://nestjs:3001/users/role/${dialogRole.id}`, {
           name: editedRoleName,
           permissions: dialogRole.permissions, // یا مجوزهای جدید را بفرستید
         });
