@@ -1,6 +1,9 @@
+version: '3.8' # نسخه Compose
+
 services:
   nextjs:
-    build: ./Student-attendance-system-next-js-main
+    build:
+      context: ./Student-attendance-system-next-js-main
     ports:
       - '3000:3000'
     depends_on:
@@ -8,15 +11,21 @@ services:
       - mysql
     networks:
       - mynetwork
+    environment:
+      NEXT_PUBLIC_API_URL: "http://nestjs:3001" # آدرس سرویس بک‌اند
 
   nestjs:
-    build: ./project-name
+    build:
+      context: ./project-name  # مسیر صحیح پروژه NestJS
     ports:
       - '3001:3001'
     depends_on:
       - mysql
     networks:
       - mynetwork
+    environment:
+      DATABASE_URL: "mysql://user:userpassword@mysql:3306/mydatabase"
+    restart: always  # در صورتی که NestJS مشکلی پیدا کند، دوباره راه‌اندازی می‌شود
 
   mysql:
     image: mysql:8.0
@@ -29,6 +38,26 @@ services:
       - '3306:3306'
     volumes:
       - mysql_data:/var/lib/mysql
+    networks:
+      - mynetwork
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 20s  # زمان صبر کردن قبل از تست اولیه
+    restart: always  # در صورتی که MySQL مشکلی پیدا کند، دوباره راه‌اندازی می‌شود
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    environment:
+      PMA_HOST: mysql
+      MYSQL_ROOT_PASSWORD: rootpassword
+    ports:
+      - "8081:80"  # دسترسی به phpMyAdmin از پورت 8081
+    depends_on:
+      - mysql
     networks:
       - mynetwork
 
